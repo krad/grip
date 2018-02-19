@@ -34,7 +34,7 @@ public class BinaryEncoder {
 /// A convenience function for creating an encoder, encoding a value, and
 /// extracting the resulting data.
 public extension BinaryEncoder {
-    static func encode(_ value: BinaryEncodable) throws -> [UInt8] {
+    public static func encode(_ value: BinaryEncodable) throws -> [UInt8] {
         let encoder = BinaryEncoder()
         try value.binaryEncode(to: encoder)
         
