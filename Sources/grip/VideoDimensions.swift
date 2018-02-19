@@ -1,6 +1,6 @@
 public struct VideoDimensions {
-    var width: UInt32
-    var height: UInt32
+    public var width: UInt32
+    public var height: UInt32
     
     public init(from data: [UInt8]) {
         self.width  = UInt32(bytes: Array(data[1..<5]))!
@@ -13,3 +13,13 @@ public struct VideoDimensions {
     }
 }
 
+public func ==(lhs: VideoDimensions, rhs: VideoDimensions) -> Bool {
+    if lhs.width == rhs.width {
+        if lhs.height == rhs.height {
+            return true
+        }
+    }
+    return false
+}
+
+extension VideoDimensions: Equatable { }
