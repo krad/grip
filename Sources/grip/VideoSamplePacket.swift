@@ -1,15 +1,15 @@
-struct VideoSamplePacket: BinaryEncodable {
+public struct VideoSamplePacket: BinaryEncodable {
     var type: SampleType                = .video
-    var isSync: Bool                    = true
-    var dependsOnOther: Bool            = false
-    var earlierDisplayTimesAllows: Bool = false
+    public var isSync: Bool                    = true
+    public var dependsOnOther: Bool            = false
+    public var earlierDisplayTimesAllows: Bool = false
     
-    var duration: Int64      = 0
-    var timescale: UInt32    = 0
+    public var duration: Int64      = 0
+    public var timescale: UInt32    = 0
     
-    var data: [UInt8]
+    public var data: [UInt8]
     
-    init(duration: Int64, timescale: UInt32, data: [UInt8]) {
+    public init(duration: Int64, timescale: UInt32, data: [UInt8]) {
         self.duration   = duration
         self.timescale  = timescale
         self.data       = data

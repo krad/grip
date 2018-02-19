@@ -1,11 +1,11 @@
-struct VideoParamSetPacket: BinarySizedEncodable {
+public struct VideoParamSetPacket: BinarySizedEncodable {
     var markerA: PacketType = .videoParams
-    var sps: [UInt8]
+    public var sps: [UInt8]
     
     var markerB: PacketType = .videoParams
-    var pps: [UInt8]
+    public var pps: [UInt8]
     
-    init(params: [[UInt8]]) throws {
+    public init(params: [[UInt8]]) throws {
         if let sps = params.first { self.sps = sps }
         else { throw PacketError.couldNotBuildParamSet }
         

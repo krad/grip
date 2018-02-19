@@ -1,8 +1,8 @@
-struct StreamTypePacket: BinarySizedEncodable {
+public struct StreamTypePacket: BinarySizedEncodable {
     var marker: PacketType = .streamType
-    var streamType: StreamType
+    public var streamType: StreamType
     
-    init(streamType: StreamType) {
+    public init(streamType: StreamType) {
         self.streamType = streamType
     }
 }
