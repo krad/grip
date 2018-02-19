@@ -21,7 +21,7 @@ public struct StreamType: OptionSet {
     public static let video = StreamType(rawValue: 1 << 0)
     public static let audio = StreamType(rawValue: 1 << 1)
     
-    func supported(_ sample: Sample) -> Bool {
+    public func supported(_ sample: Sample) -> Bool {
         if self == [.video, .audio] { return true }
         if self == [.video] && sample.type == .video { return true }
         if self == [.audio] && sample.type == .audio { return true }
