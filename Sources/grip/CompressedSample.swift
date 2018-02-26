@@ -1,7 +1,7 @@
 import Foundation
 
-public protocol Sample {
-    var type: SampleType { get }
+public protocol CompressedSample {
+    var type: CompressedSampleType { get }
     var data: [UInt8] { get }
     var size: UInt32 { get }
     var duration: Int64 { get }
@@ -12,7 +12,7 @@ public protocol Sample {
     var isSync: Bool { get }
 }
 
-extension Sample {
+extension CompressedSample {
     public var durationInSeconds: TimeInterval {
         return TimeInterval(self.duration) / TimeInterval(self.timescale)
     }

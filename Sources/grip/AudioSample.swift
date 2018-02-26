@@ -1,8 +1,8 @@
 import Foundation
 
-public struct AudioSample: Sample {
+public struct AudioSample: CompressedSample {
     
-    public let type: SampleType
+    public let type: CompressedSampleType
     public let data: [UInt8]
     
     public var size: UInt32 {

@@ -1,8 +1,8 @@
 import Foundation
 
-public struct VideoSample: Sample {
+public struct VideoSample: CompressedSample {
     
-    public var type: SampleType
+    public var type: CompressedSampleType
     public var nalus: [NALU] = []
     
     public var data: [UInt8] {
