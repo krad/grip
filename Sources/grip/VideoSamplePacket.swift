@@ -1,5 +1,5 @@
 public struct VideoSamplePacket: BinaryEncodable {
-    var type: CompressedSampleType                = .video
+    var type: CompressedSampleType             = .video
     public var isSync: Bool                    = true
     public var dependsOnOther: Bool            = false
     public var earlierDisplayTimesAllows: Bool = false
