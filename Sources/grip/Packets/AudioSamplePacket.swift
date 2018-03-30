@@ -1,5 +1,5 @@
 public struct AudioSamplePacket: BinaryEncodable {
-    public var type: CompressedSampleType    = .audio
+    public var type: PacketType    = .audio
     public var duration: Int64     = 0
     public var timescale: UInt32   = 0
     public var data: [UInt8]
@@ -10,3 +10,5 @@ public struct AudioSamplePacket: BinaryEncodable {
         self.data       = data
     }
 }
+
+extension AudioSamplePacket: Packet { }

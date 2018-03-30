@@ -1,5 +1,5 @@
 public struct VideoDimensionPacket: BinarySizedEncodable {
-    var marker: PacketType = .videoDimensions
+    public var type: PacketType = .videoDimensions
     public var width: UInt32
     public var height: UInt32
     
@@ -9,3 +9,4 @@ public struct VideoDimensionPacket: BinarySizedEncodable {
     }
 }
 
+extension VideoDimensionPacket: Packet { }

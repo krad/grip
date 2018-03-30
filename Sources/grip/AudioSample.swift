@@ -2,7 +2,7 @@ import Foundation
 
 public struct AudioSample: CompressedSample {
     
-    public let type: CompressedSampleType
+    public let type: PacketType
     public let data: [UInt8]
     
     public var size: UInt32 {

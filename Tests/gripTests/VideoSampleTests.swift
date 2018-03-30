@@ -4,7 +4,7 @@ import XCTest
 class VideoSampleTests: XCTestCase {
     
     struct SamplePacket: BinaryEncodable {
-        var type: CompressedSampleType                = .video
+        var type: PacketType                = .video
         var isSync: Bool                    = true
         var dependsOnOther: Bool            = false
         var earlierDisplayTimesAllows: Bool = false

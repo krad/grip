@@ -2,7 +2,7 @@ import Foundation
 
 public struct VideoSample: CompressedSample {
     
-    public var type: CompressedSampleType
+    public var type: PacketType
     public var nalus: [NALU] = []
     
     public var data: [UInt8] {

@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol CompressedSample {
-    var type: CompressedSampleType { get }
+    var type: PacketType { get }
     var data: [UInt8] { get }
     var size: UInt32 { get }
     var duration: Int64 { get }
