@@ -3,32 +3,19 @@ import XCTest
 
 class VideoSampleTests: XCTestCase {
     
-    struct SamplePacket: BinaryEncodable {
-        var type: PacketType                = .video
-        var isSync: Bool                    = true
-        var dependsOnOther: Bool            = false
-        var earlierDisplayTimesAllows: Bool = false
-        
-        var duration: Int64      = 0
-        var timescale: UInt32    = 0
-        
-        var data: [UInt8]
-        
-        init(duration: Int64, timescale: UInt32, data: [UInt8]) {
-            self.duration   = duration
-            self.timescale  = timescale
-            self.data       = data
-        }
+    override func setUp() {
+        super.setUp()
+        self.continueAfterFailure = false
     }
     
     func test_that_we_can_create_a_video_sample_from_bytes() {
         
-        let packet = SamplePacket(duration: 2400, timescale: 30000, data: videoPayload)
-        let bytes  = try? BinaryEncoder.encode(packet)
-        XCTAssertNotNil(bytes)
+        let videoSample = VideoSample(duration: 2400, timescale: 30000, data: videoPayload)
+        let videoSampleBytes = try? BinaryEncoder.encode(videoSample)
+        XCTAssertNotNil(videoSampleBytes)
         
         /// BinaryEncodable prefixes a 32 bit size
-        let sampleBytes = Array(bytes![4..<bytes!.count])
+        let sampleBytes = Array(videoSampleBytes![4..<videoSampleBytes!.count])
         
         let sample = VideoSample(bytes: sampleBytes)
         XCTAssertEqual(sample.type, .video)
@@ -36,11 +23,12 @@ class VideoSampleTests: XCTestCase {
         XCTAssertEqual(sample.dependsOnOthers, false)
         XCTAssertEqual(sample.duration, 2400)
         XCTAssertEqual(sample.timescale, 30000)
-        XCTAssertEqual(sample.durationSeconds, 0.08)
+        XCTAssertEqual(sample.durationInSeconds, 0.08)
+        XCTAssertEqual(sample.decode, 0.0)
         
         XCTAssertEqual(2, sample.nalus.count)
-        XCTAssertEqual(NALUType.SEI, sample.nalus.first!.type)
-        XCTAssertEqual(NALUType.IDR, sample.nalus.last!.type)
+        XCTAssertEqual(NALUType.SEI, sample.nalus.first?.type)
+        XCTAssertEqual(NALUType.IDR, sample.nalus.last?.type)
     }
     
     func test_that_we_can_create_a_stream_type_from_bytes() {

@@ -3,12 +3,38 @@ import XCTest
 
 class AudioSampleTests: XCTestCase {
     
+    override func setUp() {
+        super.setUp()
+        self.continueAfterFailure = false
+    }
+    
     func test_that_we_can_create_an_audio_sample_from_bytes() {
-        let sample = AudioSample(bytes: audioPayload)
+        let sample = AudioSample(duration: 1024, timescale: 44100, data: audioPayload)
         XCTAssertEqual(sample.type, .audio)
         XCTAssertEqual(sample.timescale, 44100)
         XCTAssertEqual(sample.duration, 1024)
         XCTAssertEqual(Float(sample.durationInSeconds), 0.0232199546485261)
+    }
+    
+    func test_that_we_can_encode_and_decode_audio_samples() {
+        
+        let sample      = AudioSample(duration: 512, timescale: 48000, data: [0, 0, 0, 0, 0])
+        let sampleBytes = try? BinaryEncoder.encode(sample)
+        XCTAssertNotNil(sampleBytes)
+        
+        let bytesWithoutSize = Array(sampleBytes![4..<sampleBytes!.count])
+        XCTAssertNotNil(bytesWithoutSize)
+        
+        let outSample = AudioSample(bytes: bytesWithoutSize)
+        XCTAssertNotNil(outSample)
+        XCTAssertEqual(outSample.isSync, false)
+        XCTAssertEqual(outSample.sampleSize, 16)
+        XCTAssertEqual(outSample.channels, 2)
+        XCTAssertEqual(outSample.sampleRate, 48000.0)
+        XCTAssertEqual(outSample.duration, 512)
+        XCTAssertEqual(outSample.timescale, 48000)
+        XCTAssertEqual(outSample.data, [0, 0, 0, 0, 0])
+        
     }
     
 }

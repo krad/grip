@@ -9,7 +9,7 @@ public struct NALU: CustomStringConvertible {
     }
     
     var payloadSize: UInt32 {
-        return UInt32(bytes: Array(self.data[0..<4]))!
+        return fromByteArray(Array(self.data[0..<4]))
     }
     
     var totalSize: UInt32 {
@@ -18,6 +18,7 @@ public struct NALU: CustomStringConvertible {
     
     
     init(data: [UInt8]) {
+        print("====", data)
         self.data = data
     }
     
@@ -69,7 +70,8 @@ public struct NALUStreamIterator: Sequence, IteratorProtocol {
     mutating public func next() -> NALU? {
         guard self.currentIdx < streamBytes.count else { return nil }
         
-        if let naluSize = UInt32(bytes: Array(streamBytes[currentIdx..<currentIdx+4])) {
+        if let naluSize: UInt32 = fromByteArray(Array(streamBytes[currentIdx..<currentIdx+4])) {
+            print(naluSize)
             let nextIdx = currentIdx + Int(naluSize) + 4
             
             let naluData = Array(streamBytes[currentIdx..<nextIdx])

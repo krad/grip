@@ -39,7 +39,7 @@ public extension BinaryEncoder {
         try value.binaryEncode(to: encoder)
         
         // KRAD: We need to prepend the size of what we've encoded
-        return byteArray(from: UInt32(encoder.data.count + 4)) + encoder.data
+        return toByteArray(UInt32(encoder.data.count + 4)) + encoder.data
     }
 }
 
