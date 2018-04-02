@@ -12,5 +12,20 @@ public struct VideoParamSetPacket: BinarySizedEncodable {
         if let pps = params.last { self.pps = pps }
         else { throw PacketError.couldNotBuildParamSet }
     }
+    
+    public init(bytes: [UInt8]) throws {
+        let splitBytes = bytes.split(separator: PacketType.videoParams.rawValue)
+        if let spsBytes = splitBytes.first {
+            self.sps = Array(spsBytes)
+        } else {
+            throw PacketError.couldNotBuildPacket
+        }
+        
+        if let ppsBytes = splitBytes.last {
+            self.pps = Array(ppsBytes)
+        } else {
+            throw PacketError.couldNotBuildPacket
+        }
+    }
 }
 

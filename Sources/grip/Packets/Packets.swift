@@ -1,5 +1,6 @@
 public enum PacketError: Error {
     case couldNotBuildParamSet
+    case couldNotBuildPacket
 }
 
 public enum PacketType: UInt8, BinaryEncodable {
