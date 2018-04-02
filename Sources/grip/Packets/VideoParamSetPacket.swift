@@ -1,5 +1,5 @@
 public struct VideoParamSetPacket: BinarySizedEncodable {
-    var markerA: PacketType = .videoParams
+    public var type: PacketType = .videoParams
     public var sps: [UInt8]
     
     var markerB: PacketType = .videoParams
@@ -28,4 +28,6 @@ public struct VideoParamSetPacket: BinarySizedEncodable {
         }
     }
 }
+
+extension VideoParamSetPacket: Packet { }
 
