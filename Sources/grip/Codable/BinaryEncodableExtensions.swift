@@ -1,12 +1,8 @@
 /// Implementations of BinaryCodable for built-in types.
 import Foundation
 
-extension Array: BinaryEncodable {
+extension Array: BinaryEncodeableArray {
     public func binaryEncode(to encoder: BinaryEncoder) throws {
-        guard Element.self is Encodable.Type else {
-            throw BinaryEncoder.Error.typeNotConformingToEncodable(Element.self)
-        }
-        
         if Element.self is BinarySizedEncodable.Type {
             for element in self {
                 let newEncoder = BinaryEncoder()
@@ -14,13 +10,17 @@ extension Array: BinaryEncodable {
                 try encoder.encode(UInt32(newEncoder.data.count + 4))
                 try newEncoder.data.encode(to: encoder)
             }
-            
+
         } else {
             for element in self {
                 try (element as! Encodable).encode(to: encoder)
             }
         }
     }
+}
+
+protocol BinaryEncodeableArray {
+    func binaryEncode(to encoder: BinaryEncoder) throws
 }
 
 extension String: BinaryEncodable {

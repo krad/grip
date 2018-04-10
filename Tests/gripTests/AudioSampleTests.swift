@@ -18,22 +18,26 @@ class AudioSampleTests: XCTestCase {
     
     func test_that_we_can_encode_and_decode_audio_samples() {
         
-        let sample      = AudioSample(duration: 512, timescale: 48000, data: [0, 0, 0, 0, 0])
-        let sampleBytes = try? BinaryEncoder.encode(sample)
-        XCTAssertNotNil(sampleBytes)
-        
-        let bytesWithoutSize = Array(sampleBytes![4..<sampleBytes!.count])
-        XCTAssertNotNil(bytesWithoutSize)
-        
-        let outSample = AudioSample(bytes: bytesWithoutSize)
-        XCTAssertNotNil(outSample)
-        XCTAssertEqual(outSample.isSync, false)
-        XCTAssertEqual(outSample.sampleSize, 16)
-        XCTAssertEqual(outSample.channels, 2)
-        XCTAssertEqual(outSample.sampleRate, 48000.0)
-        XCTAssertEqual(outSample.duration, 512)
-        XCTAssertEqual(outSample.timescale, 48000)
-        XCTAssertEqual(outSample.data, [0, 0, 0, 0, 0])
+        let sample = AudioSample(duration: 512, timescale: 48000, data: [0, 0, 0, 0, 0])
+        do {
+            let sampleBytes = try BinaryEncoder.encode(sample)
+            XCTAssertNotNil(sampleBytes)
+            
+            let bytesWithoutSize = Array(sampleBytes[4..<sampleBytes.count])
+            XCTAssertNotNil(bytesWithoutSize)
+            
+            let outSample = AudioSample(bytes: bytesWithoutSize)
+            XCTAssertNotNil(outSample)
+            XCTAssertEqual(outSample.isSync, false)
+            XCTAssertEqual(outSample.sampleSize, 16)
+            XCTAssertEqual(outSample.channels, 2)
+            XCTAssertEqual(outSample.sampleRate, 48000.0)
+            XCTAssertEqual(outSample.duration, 512)
+            XCTAssertEqual(outSample.timescale, 48000)
+            XCTAssertEqual(outSample.data, [0, 0, 0, 0, 0])
+        } catch {
+            XCTFail("\(error)")
+        }
         
     }
     

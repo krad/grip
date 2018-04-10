@@ -86,7 +86,11 @@ public extension BinaryEncoder {
         case let binary as BinaryEncodable:
             try binary.binaryEncode(to: self)
         default:
-            throw Error.typeNotConformingToBinaryEncodable(type(of: encodable))
+            if let array = encodable as? BinaryEncodeableArray {
+                try array.binaryEncode(to: self)
+            } else {
+                throw Error.typeNotConformingToBinaryEncodable(type(of: encodable))
+            }
         }
     }
     
